@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Drag & Drop Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .drag-container {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .draggable {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            cursor: move;
+            transition: all 0.3s ease;
+            border: 2px solid #2196F3;
+            backdrop-filter: blur(10px);
+        }
+
+        .draggable:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .drop-zone {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed #4CAF50;
+            min-height: 300px;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.hovered {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: #FFC107;
+        }
+
+        .dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .ai-feedback {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(233, 30, 99, 0.1);
+            border-radius: 10px;
+            border: 1px solid #e91e63;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Drag & Drop</h1>
+            <p>Drag components to build your AI interface</p>
+        </div>
+
+        <div class="drag-container">
+            <div class="draggable" draggable="true">🤖 AI Model</div>
+            <div class="draggable" draggable="true">📊 Data Processor</div>
+            <div class="draggable" draggable="true">📈 Analytics</div>
+            <div class="draggable" draggable="true">🎨 Neural Style</div>
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+            <p>Drop AI components here</p>
+        </div>
+
+        <div class="ai-feedback" id="aiFeedback">
+            AI Suggestion: Try combining these components!
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropZone = document.getElementById('dropZone');
+            const aiFeedback = document.getElementById('aiFeedback');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', () => {
+                    draggable.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                    aiFeedback.style.display = 'block';
+                    setTimeout(() => {
+                        aiFeedback.style.display = 'none';
+                    }, 2000);
+                });
+            });
+
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.classList.add('hovered');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('hovered');
+            });
+
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                const draggable = document.querySelector('.dragging');
+                dropZone.appendChild(draggable);
+                dropZone.classList.remove('hovered');
+            });
+        });
+    </script>
+</body>
+</html>
