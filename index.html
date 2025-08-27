@@ -3,150 +3,725 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Drag & Drop Interface</title>
+    <title>AI Tools Hub</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
-            color: #fff;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20vh); }
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 2;
         }
 
         .header h1 {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            color: #1e3c72;
+            font-size: 2.8em;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: glow 2s infinite alternate;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .drag-container {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
+        @keyframes glow {
+            0% { text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+            100% { text-shadow: 0 2px 15px rgba(46, 82, 152, 0.5); }
         }
 
-        .draggable {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem 2rem;
+        #searchInput {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 5px 25px rgba(46, 82, 152, 0.3);
+            background: white;
+        }
+
+        #searchResults {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
             border-radius: 15px;
-            cursor: move;
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .result-item {
+            padding: 15px 25px;
+            cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid #2196F3;
-            backdrop-filter: blur(10px);
+            font-size: 1.1em;
         }
 
-        .draggable:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
+        .result-item:hover {
+            background: #f5f7fa;
+            padding-left: 30px;
+            color: #2a5298;
         }
 
-        .drop-zone {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed #4CAF50;
-            min-height: 300px;
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .drop-zone.hovered {
-            background: rgba(76, 175, 80, 0.1);
-            border-color: #FFC107;
-        }
-
-        .dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .ai-feedback {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(233, 30, 99, 0.1);
-            border-radius: 10px;
-            border: 1px solid #e91e63;
+        .tool-container {
             display: none;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-top: 25px;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .tool-container h3 {
+            color: #2a5298;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        textarea, input, button {
+            width: 100%;
+            margin: 15px 0;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 82, 152, 0.3);
+        }
+
+        #toolOutput {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            min-height: 60px;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .action-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            width: 50%;
+            padding: 12px;
+            font-size: 1em;
+        }
+
+        /* Color Generator Styles */
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .color-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+
+        .color-info {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            font-size: 0.9em;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .container { max-width: 100%; padding: 20px; margin: 0 10px; }
+            .header h1 { font-size: 2em; }
+            #searchInput { padding: 12px 20px; font-size: 1em; }
+            .result-item { padding: 12px 20px; font-size: 1em; }
+            .tool-container h3 { font-size: 1.5em; }
+            textarea, input, button { padding: 12px; font-size: 1em; }
+            .color-box { width: 80px; height: 80px; }
         }
     </style>
 </head>
 <body>
+    <div class="particles" id="particles"></div>
     <div class="container">
         <div class="header">
-            <h1>AI Drag & Drop</h1>
-            <p>Drag components to build your AI interface</p>
+            <h1>AI Tools Hub</h1>
         </div>
-
-        <div class="drag-container">
-            <div class="draggable" draggable="true">🤖 AI Model</div>
-            <div class="draggable" draggable="true">📊 Data Processor</div>
-            <div class="draggable" draggable="true">📈 Analytics</div>
-            <div class="draggable" draggable="true">🎨 Neural Style</div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for an AI tool...">
+            <div id="searchResults"></div>
         </div>
-
-        <div class="drop-zone" id="dropZone">
-            <p>Drop AI components here</p>
-        </div>
-
-        <div class="ai-feedback" id="aiFeedback">
-            AI Suggestion: Try combining these components!
-        </div>
+        <div class="tool-container" id="toolContainer"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const draggables = document.querySelectorAll('.draggable');
-            const dropZone = document.getElementById('dropZone');
-            const aiFeedback = document.getElementById('aiFeedback');
+        // Particle Animation
+        const particlesContainer = document.getElementById('particles');
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = `${Math.random() * 10 + 5}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
 
-            draggables.forEach(draggable => {
-                draggable.addEventListener('dragstart', () => {
-                    draggable.classList.add('dragging');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const toolContainer = document.getElementById('toolContainer');
+
+        const tools = {
+            'Image Cropper': `
+                <h3>AI Image Cropper</h3>
+                <input type="file" id="imageInput" accept="image/*">
+                <div id="cropperContainer">
+                    <img id="cropperImage">
+                    <div id="cropOverlay">
+                        <div class="crop-handle" id="topLeft"></div>
+                        <div class="crop-handle" id="bottomRight" style="bottom: 0; right: 0;"></div>
+                    </div>
+                </div>
+                <button onclick="cropImage()">Crop Image</button>
+                <div class="action-buttons" id="cropActions" style="display: none;">
+                    <button onclick="downloadImage('cropperImage')">Download</button>
+                </div>
+            `,
+            'Code Runner': `
+                <h3>Code Runner</h3>
+                <textarea id="codeInput" rows="5" placeholder="Enter JavaScript code..."></textarea>
+                <button onclick="runCode()">Run Code</button>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="copyOutput('toolOutput')">Copy</button>
+                    <button onclick="downloadOutput('toolOutput', 'code-result.txt')">Download</button>
+                </div>
+            `,
+            'Text Generator': `
+                <h3>AI Text Generator</h3>
+                <input type="text" id="textPrompt" placeholder="Enter prompt...">
+                <button onclick="generateText()">Generate</button>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="copyOutput('toolOutput')">Copy</button>
+                    <button onclick="downloadOutput('toolOutput', 'generated-text.txt')">Download</button>
+                </div>
+            `,
+            'Color Generator': `
+                <h3>Color Generator</h3>
+                <button onclick="generateColor()">Generate Colors</button>
+                <div id="toolOutput" class="color-palette"></div>
+            `,
+            'QR Code Generator': `
+                <h3>QR Code Generator</h3>
+                <input type="text" id="qrInput" placeholder="Enter URL or text...">
+                <button onclick="generateQR()">Generate QR</button>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="downloadQR()">Download QR</button>
+                </div>
+            `,
+            'Password Generator': `
+                <h3>Password Generator</h3>
+                <button onclick="generatePassword()">Generate</button>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="copyOutput('toolOutput')">Copy</button>
+                    <button onclick="downloadOutput('toolOutput', 'password.txt')">Download</button>
+                </div>
+            `,
+            'Text to Speech': `
+                <h3>Text to Speech</h3>
+                <textarea id="ttsInput" rows="3" placeholder="Enter text..."></textarea>
+                <button onclick="textToSpeech()">Speak</button>
+            `,
+            'Image Resizer': `
+                <h3>Image Resizer</h3>
+                <input type="file" id="imageInput" accept="image/*">
+                <input type="number" id="resizeWidth" placeholder="Width in pixels">
+                <div id="toolOutput"></div>
+                <button onclick="resizeImage()">Resize</button>
+                <div class="action-buttons">
+                    <button onclick="downloadImage('toolOutput')">Download</button>
+                </div>
+            `,
+            'Word Counter': `
+                <h3>Word Counter</h3>
+                <textarea id="wordInput" rows="3" placeholder="Enter text..."></textarea>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="copyOutput('toolOutput')">Copy</button>
+                    <button onclick="downloadOutput('toolOutput', 'word-count.txt')">Download</button>
+                </div>
+            `,
+            'Random Number': `
+                <h3>Random Number</h3>
+                <input type="number" id="rangeInput" placeholder="Max number">
+                <button onclick="generateNumber()">Generate</button>
+                <div id="toolOutput"></div>
+                <div class="action-buttons">
+                    <button onclick="copyOutput('toolOutput')">Copy</button>
+                    <button onclick="downloadOutput('toolOutput', 'random-number.txt')">Download</button>
+                </div>
+            `
+        };
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            searchResults.innerHTML = '';
+            toolContainer.style.display = 'none';
+
+            if (query) {
+                const filteredTools = Object.keys(tools).filter(tool => 
+                    tool.toLowerCase().includes(query)
+                );
+                
+                filteredTools.forEach(tool => {
+                    const result = document.createElement('div');
+                    result.className = 'result-item';
+                    result.textContent = tool;
+                    result.onclick = () => showTool(tool);
+                    searchResults.appendChild(result);
                 });
-
-                draggable.addEventListener('dragend', () => {
-                    draggable.classList.remove('dragging');
-                    aiFeedback.style.display = 'block';
-                    setTimeout(() => {
-                        aiFeedback.style.display = 'none';
-                    }, 2000);
-                });
-            });
-
-            dropZone.addEventListener('dragover', e => {
-                e.preventDefault();
-                dropZone.classList.add('hovered');
-            });
-
-            dropZone.addEventListener('dragleave', () => {
-                dropZone.classList.remove('hovered');
-            });
-
-            dropZone.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggable = document.querySelector('.dragging');
-                dropZone.appendChild(draggable);
-                dropZone.classList.remove('hovered');
-            });
+            }
         });
+
+        function showTool(toolName) {
+            searchResults.innerHTML = '';
+            toolContainer.innerHTML = tools[toolName];
+            toolContainer.style.display = 'block';
+            
+            if (toolName === 'Word Counter') {
+                document.getElementById('wordInput').addEventListener('input', updateWordCount);
+            }
+            if (toolName === 'Image Cropper') {
+                setupCropper();
+            }
+        }
+
+        // Utility Functions
+        function copyOutput(elementId) {
+            const output = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(output).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+
+        function downloadOutput(elementId, filename) {
+            const output = document.getElementById(elementId).innerText;
+            const blob = new Blob([output], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadImage(elementId) {
+            const img = document.getElementById(elementId).tagName === 'IMG' ? 
+                document.getElementById(elementId) : 
+                document.querySelector(`#${elementId} img`);
+            if (!img) return;
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = 'image.png';
+            a.click();
+        }
+
+        function downloadQR() {
+            const img = document.querySelector('#toolOutput img');
+            if (!img) return;
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = 'qr-code.png';
+            a.click();
+        }
+
+        // Custom Cropper Functions
+        function setupCropper() {
+            const imageInput = document.getElementById('imageInput');
+            const cropperImage = document.getElementById('cropperImage');
+            const cropOverlay = document.getElementById('cropOverlay');
+            let isDragging = false, isResizing = false, startX, startY;
+
+            imageInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                cropperImage.src = URL.createObjectURL(file);
+                cropperImage.onload = () => {
+                    cropOverlay.style.width = '100px';
+                    cropOverlay.style.height = '100px';
+                    cropOverlay.style.left = '0px';
+                    cropOverlay.style.top = '0px';
+                    cropOverlay.style.display = 'block';
+                };
+            });
+
+            cropOverlay.addEventListener('mousedown', (e) => {
+                if (e.target.className === 'crop-handle') {
+                    isResizing = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                } else {
+                    isDragging = true;
+                    startX = e.clientX - parseInt(cropOverlay.style.left);
+                    startY = e.clientY - parseInt(cropOverlay.style.top);
+                }
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    let newX = e.clientX - startX;
+                    let newY = e.clientY - startY;
+                    const maxX = cropperImage.width - parseInt(cropOverlay.style.width);
+                    const maxY = cropperImage.height - parseInt(cropOverlay.style.height);
+                    newX = Math.max(0, Math.min(newX, maxX));
+                    newY = Math.max(0, Math.min(newY, maxY));
+                    cropOverlay.style.left = newX + 'px';
+                    cropOverlay.style.top = newY + 'px';
+                } else if (isResizing) {
+                    const rect = cropOverlay.getBoundingClientRect();
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+                    if (e.target.id === 'topLeft') {
+                        cropOverlay.style.width = (parseInt(cropOverlay.style.width) - deltaX) + 'px';
+                        cropOverlay.style.height = (parseInt(cropOverlay.style.height) - deltaY) + 'px';
+                        cropOverlay.style.left = (parseInt(cropOverlay.style.left) + deltaX) + 'px';
+                        cropOverlay.style.top = (parseInt(cropOverlay.style.top) + deltaY) + 'px';
+                    } else {
+                        cropOverlay.style.width = (parseInt(cropOverlay.style.width) + deltaX) + 'px';
+                        cropOverlay.style.height = (parseInt(cropOverlay.style.height) + deltaY) + 'px';
+                    }
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                isResizing = false;
+            });
+        }
+
+        function cropImage() {
+            const img = document.getElementById('cropperImage');
+            const overlay = document.getElementById('cropOverlay');
+            if (!img.src) return;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const cropX = parseInt(overlay.style.left);
+            const cropY = parseInt(overlay.style.top);
+            const cropWidth = parseInt(overlay.style.width);
+            const cropHeight = parseInt(overlay.style.height);
+
+            canvas.width = cropWidth;
+            canvas.height = cropHeight;
+            ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+            img.src = canvas.toDataURL();
+            overlay.style.display = 'none';
+            document.getElementById('cropActions').style.display = 'flex';
+        }
+
+        // Enhanced Color Generator
+        function generateColor() {
+            const output = document.getElementById('toolOutput');
+            output.innerHTML = '';
+
+            // Generate base color
+            const baseColor = getRandomColor();
+            const baseRGB = hexToRGB(baseColor);
+
+            // Generate complementary colors
+            const complementary = getComplementaryColor(baseRGB);
+            const analogous1 = getAnalogousColor(baseRGB, 30);
+            const analogous2 = getAnalogousColor(baseRGB, -30);
+            const triadic1 = getAnalogousColor(baseRGB, 120);
+            const triadic2 = getAnalogousColor(baseRGB, -120);
+
+            const colors = [
+                { hex: baseColor, rgb: baseRGB, label: 'Base Color' },
+                { hex: RGBToHex(complementary), rgb: complementary, label: 'Complementary' },
+                { hex: RGBToHex(analogous1), rgb: analogous1, label: 'Analogous 1' },
+                { hex: RGBToHex(analogous2), rgb: analogous2, label: 'Analogous 2' },
+                { hex: RGBToHex(triadic1), rgb: triadic1, label: 'Triadic 1' },
+                { hex: RGBToHex(triadic2), rgb: triadic2, label: 'Triadic 2' }
+            ];
+
+            colors.forEach(color => {
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = color.hex;
+                colorBox.innerHTML = `
+                    <div class="color-info">
+                        ${color.label}<br>
+                        ${color.hex}<br>
+                        RGB(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})
+                    </div>
+                `;
+                colorBox.onclick = () => {
+                    navigator.clipboard.writeText(color.hex).then(() => {
+                        alert(`Copied ${color.hex} to clipboard!`);
+                    });
+                };
+                output.appendChild(colorBox);
+            });
+        }
+
+        function getRandomColor() {
+            return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        }
+
+        function hexToRGB(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return { r, g, b };
+        }
+
+        function RGBToHex(rgb) {
+            return '#' + [rgb.r, rgb.g, rgb.b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        function getComplementaryColor(rgb) {
+            return {
+                r: 255 - rgb.r,
+                g: 255 - rgb.g,
+                b: 255 - rgb.b
+            };
+        }
+
+        function getAnalogousColor(rgb, angle) {
+            const hsl = RGBToHSL(rgb);
+            hsl.h = (hsl.h + angle + 360) % 360;
+            return HSLToRGB(hsl);
+        }
+
+        function RGBToHSL(rgb) {
+            let r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return { h: h * 360, s, l };
+        }
+
+        function HSLToRGB(hsl) {
+            const h = hsl.h / 360, s = hsl.s, l = hsl.l;
+            let r, g, b;
+
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+
+            return {
+                r: Math.round(r * 255),
+                g: Math.round(g * 255),
+                b: Math.round(b * 255)
+            };
+        }
+
+        // Other Tool Functions
+        function runCode() {
+            const code = document.getElementById('codeInput').value;
+            const output = document.getElementById('toolOutput');
+            try {
+                const result = eval(code);
+                output.innerHTML = result || 'No output';
+            } catch (e) {
+                output.innerHTML = 'Error: ' + e.message;
+            }
+        }
+
+        function generateText() {
+            const prompt = document.getElementById('textPrompt').value;
+            const output = document.getElementById('toolOutput');
+            output.innerHTML = `Generated text for "${prompt}": Lorem ipsum dolor sit amet.`;
+        }
+
+        function generateQR() {
+            const text = document.getElementById('qrInput').value;
+            const output = document.getElementById('toolOutput');
+            if (!text) {
+                output.innerHTML = 'Please enter text or URL';
+                return;
+            }
+            output.innerHTML = 'Generating QR code...';
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(text)}`;
+            const img = new Image();
+            img.onload = () => {
+                output.innerHTML = '';
+                output.appendChild(img);
+            };
+            img.onerror = () => {
+                output.innerHTML = 'Failed to generate QR code';
+            };
+            img.src = qrUrl;
+        }
+
+        function generatePassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+            let password = '';
+            for (let i = 0; i < 12; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('toolOutput').innerHTML = password;
+        }
+
+        function textToSpeech() {
+            const text = document.getElementById('ttsInput').value;
+            const speech = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(speech);
+        }
+
+        function resizeImage() {
+            const file = document.getElementById('imageInput').files[0];
+            const width = document.getElementById('resizeWidth').value;
+            if (!file || !width) return;
+
+            const img = document.querySelector('#toolOutput img');
+            if (!img) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = (img.height / img.width) * width;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            img.src = canvas.toDataURL();
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('wordInput').value;
+            const words = text.trim().split(/\s+/).length;
+            document.getElementById('toolOutput').innerHTML = `Words: ${text ? words : 0}`;
+        }
+
+        function generateNumber() {
+            const max = parseInt(document.getElementById('rangeInput').value) || 100;
+            const number = Math.floor(Math.random() * max);
+            document.getElementById('toolOutput').innerHTML = number;
+        }
     </script>
 </body>
 </html>
