@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meechto | Creative Solutions</title>
+    <title>Meechto - Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,497 +18,299 @@
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             color: white;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        /* Header Styles */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            animation: fadeIn 1s ease-out;
+            text-align: center;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 5rem;
             font-weight: 800;
-            background: linear-gradient(45deg, #ff8a00, #e52e71, #ff0050);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: #ff8a00;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(45deg, #ff8a00, #e52e71);
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 60px 0;
-            animation: slideUp 1s ease-out;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
             margin-bottom: 20px;
             background: linear-gradient(45deg, #ff8a00, #e52e71, #ff0050);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: #ddd;
+        .slogan {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            line-height: 1.4;
+            font-weight: 600;
         }
 
-        /* Card Slider */
-        .slider-container {
-            position: relative;
-            max-width: 1200px;
-            margin: 40px auto;
-            overflow: hidden;
-            height: 450px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        .devanagari {
+            font-family: 'Mangal', 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+            display: block;
+            font-weight: 700;
+            color: #ffcc00;
+            text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
         }
 
-        .card-slider {
+        .countdown {
             display: flex;
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            height: 100%;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
         }
 
-        .slide {
-            flex: 0 0 33.333%;
-            padding: 20px;
-            height: 100%;
-            perspective: 1000px;
-        }
-
-        .card {
+        .countdown-item {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 120px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.6s ease, box-shadow 0.4s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .card-img {
-            height: 65%;
-            overflow: hidden;
-            position: relative;
+        .countdown-label {
+            font-size: 1rem;
+            color: #ddd;
+            margin-top: 10px;
         }
 
-        .card-img div {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--color1), var(--color2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.6s ease;
-        }
-
-        .card:hover .card-img div {
-            transform: scale(1.1);
-        }
-
-        .card-content {
-            padding: 20px;
-            flex-grow: 1;
+        .notify-form {
+            max-width: 500px;
+            margin: 40px auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            text-align: center;
+            gap: 15px;
         }
 
-        .card h3 {
+        .form-title {
             font-size: 1.5rem;
             margin-bottom: 10px;
-            color: white;
+            color: #ffcc00;
         }
 
-        /* Navigation Arrows */
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
+        .input-group {
             display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            z-index: 10;
-            padding: 0 20px;
-        }
-
-        .slider-nav button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .slider-nav button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* Dots Indicator */
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
             gap: 10px;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+        .email-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #ff8a00;
+        }
+
+        .notify-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 138, 0, 0.4);
         }
 
-        .dot.active {
-            background: #ff8a00;
-            transform: scale(1.3);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .notify-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 138, 0, 0.6);
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-top: 40px;
         }
 
-        .social-icons a {
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .social-icons a:hover {
-            color: #ff8a00;
+        .social-icon:hover {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
             transform: translateY(-5px);
         }
 
+        .footer {
+            margin-top: 60px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
-        /* Responsive Design */
-        @media (max-width: 1100px) {
-            .slide {
-                flex: 0 0 50%;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .slide {
-                flex: 0 0 100%;
+            .logo {
+                font-size: 3.5rem;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
+            .slogan {
+                font-size: 1.5rem;
             }
             
-            nav ul {
-                gap: 15px;
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            .countdown-item {
+                min-width: 100px;
+            }
+            
+            .input-group {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">Meechto</div>
-            <nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <section class="hero">
-            <h1>Creative Digital Experiences</h1>
-            <p>We craft immersive digital solutions that blend innovation with aesthetics</p>
-        </section>
-
-        <div class="slider-container">
-            <div class="card-slider">
-                <!-- Slide 1 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #ff416c; --color2: #ff4b2b;">
-                                <i class="fas fa-paint-brush" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Design Innovation</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 2 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #8E2DE2; --color2: #4A00E0;">
-                                <i class="fas fa-code" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Web Development</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 3 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #3CA55C; --color2: #B5AC49;">
-                                <i class="fas fa-mobile-alt" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Mobile Solutions</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 4 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #2193b0; --color2: #6dd5ed;">
-                                <i class="fas fa-chart-line" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Digital Marketing</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 5 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #f46b45; --color2: #eea849;">
-                                <i class="fas fa-cloud" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Cloud Services</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 6 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <div style="--color1: #834d9b; --color2: #d04ed6;">
-                                <i class="fas fa-shield-alt" style="font-size: 64px; color: white;"></i>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Security Solutions</h3>
-                        </div>
-                    </div>
-                </div>
+        <div class="logo">Meechto</div>
+        
+        <div class="slogan">
+            <span class="devanagari">नोकरी हवी? थांबू नको, Meechto – नोकरी देणारं ठिकाण!</span>
+        </div>
+        
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
             </div>
-            
-            <div class="slider-nav">
-                <button id="prev"><i class="fas fa-chevron-left"></i></button>
-                <button id="next"><i class="fas fa-chevron-right"></i></button>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
             </div>
         </div>
         
-        <div class="slider-dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
+        <div class="notify-form">
+            <div class="form-title">Notify me when we launch</div>
+            <div class="input-group">
+                <input type="email" class="email-input" placeholder="Enter your email address">
+                <button class="notify-btn">Notify Me</button>
+            </div>
         </div>
         
-        <footer>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <p>© 2023 Meechto. All rights reserved.</p>
-        </footer>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        
+        <div class="footer">
+            © 2023 Meechto. All rights reserved. | Coming Soon
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.card-slider');
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.getElementById('prev');
-            const nextBtn = document.getElementById('next');
+        // Set the launch date (2 weeks from now)
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 14);
+
+        // Update countdown every second
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
             
-            let currentIndex = 0;
-            const slideCount = slides.length;
-            const visibleSlides = window.innerWidth < 768 ? 1 : window.innerWidth < 1100 ? 2 : 3;
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // Initialize slider
-            updateSlider();
+            // Display the results
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
             
-            // Auto slide
-            let autoSlideInterval = setInterval(nextSlide, 4000);
-            
-            // Next slide function
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % (slideCount - visibleSlides + 1);
-                updateSlider();
+            // If the countdown is over
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
             }
+        }, 1000);
+
+        // Email notification form
+        document.querySelector('.notify-btn').addEventListener('click', function() {
+            const emailInput = document.querySelector('.email-input');
+            const email = emailInput.value.trim();
             
-            // Previous slide function
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + (slideCount - visibleSlides + 1)) % (slideCount - visibleSlides + 1);
-                updateSlider();
-            }
-            
-            // Update slider position
-            function updateSlider() {
-                const slideWidth = slides[0].offsetWidth;
-                slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-                
-                // Update dots
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
-            
-            // Event listeners
-            nextBtn.addEventListener('click', function() {
-                clearInterval(autoSlideInterval);
-                nextSlide();
-                autoSlideInterval = setInterval(nextSlide, 4000);
-            });
-            
-            prevBtn.addEventListener('click', function() {
-                clearInterval(autoSlideInterval);
-                prevSlide();
-                autoSlideInterval = setInterval(nextSlide, 4000);
-            });
-            
-            // Dot navigation
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', function() {
-                    clearInterval(autoSlideInterval);
-                    currentIndex = index;
-                    updateSlider();
-                    autoSlideInterval = setInterval(nextSlide, 4000);
-                });
-            });
-            
-            // Pause auto slide on hover
-            slider.addEventListener('mouseenter', function() {
-                clearInterval(autoSlideInterval);
-            });
-            
-            slider.addEventListener('mouseleave', function() {
-                autoSlideInterval = setInterval(nextSlide, 4000);
-            });
-            
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                const newVisibleSlides = window.innerWidth < 768 ? 1 : window.innerWidth < 1100 ? 2 : 3;
-                
-                if (newVisibleSlides !== visibleSlides) {
-                    currentIndex = 0;
-                    updateSlider();
+            if (email) {
+                if (validateEmail(email)) {
+                    alert('Thank you! We will notify you when we launch.');
+                    emailInput.value = '';
+                } else {
+                    alert('Please enter a valid email address.');
                 }
-            });
+            } else {
+                alert('Please enter your email address.');
+            }
         });
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
     </script>
 </body>
 </html>
